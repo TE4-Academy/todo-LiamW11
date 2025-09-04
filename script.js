@@ -1,7 +1,11 @@
 // JavaScript Todo Basics - Har buggar som du behöver fixa!
 
 // STEG 1: Todo-array (fungerar bra)
-let todoArray = ['Handla mat', 'Städa rummet', 'Göra läxor'];
+let todoArray = [  
+  { uppgift: "Handla mat", completed: false},
+  { uppgift: "Städa rummet", completed: false},
+  { uppgift: "Göra läxor", completed: false},
+];
 
 // STEG 2: Visa todos-funktion (har problem!)
 function visaTodos() {
@@ -11,7 +15,7 @@ function visaTodos() {
     for (let i = 0; i < todoArray.length; i++) {
         htmlString += '<div class="todo-item">';
         htmlString += '<input type="checkbox" onchange="toggleTodo(' + i + ')">';
-        htmlString += '<span>' + todoArray[i] + '</span>';
+        htmlString += '<span>' + todoArray[i].uppgift + '</span>';
         htmlString += '<button onclick="taBortTodo(' + i + ')">Ta bort</button>';
         htmlString += '</div>';
     }
@@ -22,14 +26,19 @@ function visaTodos() {
 // STEG 3: Lägg till todo (har flera problem!)
 function laggTillTodo() {
     const inputElement = document.getElementById('todo-input');
-    const nyTodo = inputElement.value.trim();
+    const nyTodoUppgift = inputElement.value.trim();
     
-    if (nyTodo === '') {
+    if (nyTodoUppgift === '') {
         alert('Du måste skriva något!');
         return;
     }
 
-    todoArray.push(nyTodo);
+    const todoObjekt = {
+        uppgift: nyTodoUppgift,
+        completed: false
+    };
+
+    todoArray.push(todoObjekt);
 
      visaTodos();
 
@@ -54,25 +63,20 @@ function taBortTodo(index) {
 }
 
 function toggleTodo(index) {
-    // Implementera "klar/inte klar" funktionalitet
-    // Tips: Lägg till en "completed" property till varje todo
+    todoArray[index].completed = !todoArray[index].completed;
 }
 
-// STEG 5: Statistik-funktion (saknas!)
-// TODO: Skriv denna funktion
 function uppdateraStats() {
     const totalElement = document.getElementById('total-count');
     totalElement.textContent = todoArray.length;
 }
 
-// STEG 6: Debug-funktion (fungerar)
 function uppdateraDebug() {
     document.getElementById('debug-length').textContent = todoArray.length;
     document.getElementById('debug-last').textContent = todoArray[todoArray.length - 1] || 'Ingen';
     document.getElementById('debug-array').textContent = JSON.stringify(todoArray);
 }
 
-// STEG 7: Event listeners (bara en fungerar!)
 document.getElementById('add-btn').addEventListener('click', laggTillTodo);
 document.getElementById('clear-btn').addEventListener('click', rensaAllaTodos);
 document.getElementById('todo-input').addEventListener('keypress', function(event) {
@@ -81,8 +85,6 @@ document.getElementById('todo-input').addEventListener('keypress', function(even
     }
 });
 
-// STEG 8: Initiera appen (stora problem!)
-// PROBLEM: Inget händer när sidan laddas!
  visaTodos();
  uppdateraStats();
  uppdateraDebug();
