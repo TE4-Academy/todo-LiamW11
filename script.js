@@ -22,17 +22,18 @@ function visaTodos() {
 function laggTillTodo() {
     const inputElement = document.getElementById('todo-input');
     const nyTodo = inputElement.value;
+    
+    if (nyTodo === '') {
+        alert('Du måste skriva något!');
+        return;
+    }
 
-    // PROBLEM: Vad händer om input är tom?
     todoArray.push(nyTodo);
 
-    // PROBLEM: Listan uppdateras inte!
      visaTodos();
 
-    // PROBLEM: Input rensas inte!
      inputElement.value = '';
 
-    // PROBLEM: Statistik uppdateras inte!
      uppdateraStats();
      uppdateraDebug();
 }
