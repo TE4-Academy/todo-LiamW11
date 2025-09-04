@@ -8,7 +8,6 @@ function visaTodos() {
     const listaElement = document.getElementById('todo-lista');
     let htmlString = '<h3>Mina Todos:</h3>';
 
-    // PROBLEM: Listan visas inte! Vad saknas?
     for (let i = 0; i < todoArray.length; i++) {
         htmlString += '<div class="todo-item">';
         htmlString += '<span>' + todoArray[i] + '</span>';
@@ -16,8 +15,7 @@ function visaTodos() {
         htmlString += '</div>';
     }
 
-    // PROBLEM: Vi uppdaterar aldrig HTML:en!
-    // listaElement.innerHTML = htmlString;
+    listaElement.innerHTML = htmlString;
 }
 
 // STEG 3: Lägg till todo (har flera problem!)
@@ -29,29 +27,29 @@ function laggTillTodo() {
     todoArray.push(nyTodo);
 
     // PROBLEM: Listan uppdateras inte!
-    // visaTodos();
+     visaTodos();
 
     // PROBLEM: Input rensas inte!
-    // inputElement.value = '';
+     inputElement.value = '';
 
     // PROBLEM: Statistik uppdateras inte!
-    // uppdateraStats();
-    // uppdateraDebug();
+     uppdateraStats();
+     uppdateraDebug();
 }
 
-// STEG 4: Ta bort todo (saknas helt!)
-// TODO: Skriv denna funktion
-// function taBortTodo(index) {
-//     // Använd splice() för att ta bort från array
-//     // Uppdatera listan och statistik
-// }
+function taBortTodo(index) {
+    todoArray.splice(index, 1);  // Ta bort 1 element på position index
+    visaTodos();                 // Uppdatera listan
+    uppdateraStats();           // Uppdatera statistik
+    uppdateraDebug();           // Uppdatera debug
+}
 
 // STEG 5: Statistik-funktion (saknas!)
 // TODO: Skriv denna funktion
-// function uppdateraStats() {
-//     // Uppdatera total-count
-//     // Kanske fler statistik senare?
-// }
+function uppdateraStats() {
+    const totalElement = document.getElementById('total-count');
+    totalElement.textContent = todoArray.length;
+}
 
 // STEG 6: Debug-funktion (fungerar)
 function uppdateraDebug() {
@@ -68,9 +66,9 @@ document.getElementById('add-btn').addEventListener('click', laggTillTodo);
 
 // STEG 8: Initiera appen (stora problem!)
 // PROBLEM: Inget händer när sidan laddas!
-// visaTodos();
-// uppdateraStats();
-// uppdateraDebug();
+ visaTodos();
+ uppdateraStats();
+ uppdateraDebug();
 
 // TESTOMRÅDE
 console.log('Todo app laddad!');
