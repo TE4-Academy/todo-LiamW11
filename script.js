@@ -10,6 +10,7 @@ function visaTodos() {
 
     for (let i = 0; i < todoArray.length; i++) {
         htmlString += '<div class="todo-item">';
+        htmlString += '<input type="checkbox" onchange="toggleTodo(' + i + ')">';
         htmlString += '<span>' + todoArray[i] + '</span>';
         htmlString += '<button onclick="taBortTodo(' + i + ')">Ta bort</button>';
         htmlString += '</div>';
@@ -21,7 +22,7 @@ function visaTodos() {
 // STEG 3: Lägg till todo (har flera problem!)
 function laggTillTodo() {
     const inputElement = document.getElementById('todo-input');
-    const nyTodo = inputElement.value;
+    const nyTodo = inputElement.value.trim();
     
     if (nyTodo === '') {
         alert('Du måste skriva något!');
@@ -38,11 +39,23 @@ function laggTillTodo() {
      uppdateraDebug();
 }
 
+function rensaAllaTodos() {
+    todoArray = [];
+    visaTodos();
+    uppdateraStats();
+    uppdateraDebug();
+}
+
 function taBortTodo(index) {
-    todoArray.splice(index, 1);  // Ta bort 1 element på position index
-    visaTodos();                 // Uppdatera listan
-    uppdateraStats();           // Uppdatera statistik
-    uppdateraDebug();           // Uppdatera debug
+    todoArray.splice(index, 1);
+    visaTodos();
+    uppdateraStats();
+    uppdateraDebug();
+}
+
+function toggleTodo(index) {
+    // Implementera "klar/inte klar" funktionalitet
+    // Tips: Lägg till en "completed" property till varje todo
 }
 
 // STEG 5: Statistik-funktion (saknas!)
@@ -61,9 +74,12 @@ function uppdateraDebug() {
 
 // STEG 7: Event listeners (bara en fungerar!)
 document.getElementById('add-btn').addEventListener('click', laggTillTodo);
-
-// TODO: Lägg till event listener för Enter-tangent
-// TODO: Lägg till event listeners för andra knappar
+document.getElementById('clear-btn').addEventListener('click', rensaAllaTodos);
+document.getElementById('todo-input').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+        laggTillTodo();
+    }
+});
 
 // STEG 8: Initiera appen (stora problem!)
 // PROBLEM: Inget händer när sidan laddas!
