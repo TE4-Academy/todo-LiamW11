@@ -7,6 +7,10 @@ let todoArray = [
   { uppgift: "Göra läxor", completed: false},
 ];
 
+function sparaTodos(){
+    localStorage.setItem("todos", JSON.stringify(todoArray));
+}
+
 // STEG 2: Visa todos-funktion (har problem!)
 function visaTodos() {
     const listaElement = document.getElementById('todo-lista');
@@ -39,7 +43,7 @@ function laggTillTodo() {
     };
 
     todoArray.push(todoObjekt);
-
+    sparaTodos();
      visaTodos();
 
      inputElement.value = '';
@@ -50,6 +54,7 @@ function laggTillTodo() {
 
 function rensaAllaTodos() {
     todoArray = [];
+    sparaTodos();
     visaTodos();
     uppdateraStats();
     uppdateraDebug();
@@ -57,6 +62,7 @@ function rensaAllaTodos() {
 
 function taBortTodo(index) {
     todoArray.splice(index, 1);
+    sparaTodos();
     visaTodos();
     uppdateraStats();
     uppdateraDebug();
@@ -64,6 +70,8 @@ function taBortTodo(index) {
 
 function toggleTodo(index) {
     todoArray[index].completed = !todoArray[index].completed;
+    sparaTodos();
+    uppdateraDebug();
 }
 
 function uppdateraStats() {
@@ -73,7 +81,7 @@ function uppdateraStats() {
 
 function uppdateraDebug() {
     document.getElementById('debug-length').textContent = todoArray.length;
-    document.getElementById('debug-last').textContent = todoArray[todoArray.length - 1] || 'Ingen';
+    document.getElementById('debug-last').textContent = todoArray[todoArray.length - 1].uppgift || 'Ingen';
     document.getElementById('debug-array').textContent = JSON.stringify(todoArray);
 }
 
@@ -85,6 +93,12 @@ document.getElementById('todo-input').addEventListener('keypress', function(even
     }
 });
 
+let sparadeTodos = localStorage.getItem("todos");
+if(sparadeTodos){
+    todoArray = JSON.parse(sparadeTodos);
+}
+
+sparaTodos();
  visaTodos();
  uppdateraStats();
  uppdateraDebug();
