@@ -15,15 +15,16 @@ function sparaTodos(){
 function visaTodos() {
     const listaElement = document.getElementById('todo-lista');
     let htmlString = '<h3>Mina Todos:</h3>';
-
+    
     for (let i = 0; i < todoArray.length; i++) {
         htmlString += '<div class="todo-item">';
-        htmlString += '<input type="checkbox" onchange="toggleTodo(' + i + ')">';
+        const completed = todoArray[i].completed ? 'checked' : '';
+        htmlString += '<input type="checkbox" onchange="toggleTodo(' + i + ')" ' + completed + '>';
         htmlString += '<span>' + todoArray[i].uppgift + '</span>';
         htmlString += '<button onclick="taBortTodo(' + i + ')">Ta bort</button>';
         htmlString += '</div>';
     }
-
+    
     listaElement.innerHTML = htmlString;
 }
 
